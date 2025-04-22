@@ -1,0 +1,92 @@
+:root {
+	--background_color: rgb(255, 255, 255);
+
+	--border: var(--border_width) solid var(--border_color);
+	--border_color: rgb(238, 238, 238);
+	--border_radius: 8px;
+	--border_width: 1px;
+
+	--color: rgb(0, 0, 0);
+	--color_gold: rgb(238, 119, 0);
+	--color_red: rgb(238, 0, 0);
+	--color_blue: rgb(0, 0, 238);
+
+	--font_family: sans-serif;
+
+	--margin: 8px;
+
+	--padding: 8px;
+}
+
+a:link {
+	color: var(--color_red);
+}
+
+a:visited {
+	color: var(--color_gold);
+}
+
+a:active {
+	color: var(--color_blue);
+}
+
+body {
+	align-content: space-between;
+	background-color: var(--background_color);
+	/* background-image: linear-gradient(rgb(135, 240, 240), rgb(240, 135, 240)); */
+	/* background-image: linear-gradient(rgb(135, 135, 240), rgb(240, 135, 240), rgb(240, 135, 135), rgb(240, 240, 135)); */
+	/* background-image: linear-gradient(rgb(60, 60, 120), rgb(120, 60, 120), rgb(120, 60, 60), rgb(120, 120, 60)); */
+	/* background-image: linear-gradient(rgb(60, 120, 120), rgb(120, 60, 120)); */
+	background-attachment: fixed;
+	box-sizing: border-box;
+	color: var(--color);
+	display: flex;
+	flex-wrap: wrap;
+	font-family: var(--font_family);
+	justify-content: center;
+	margin: 0;
+	min-height: 100vh;
+}
+
+body::selection {
+	background-color: var(--color_blue);
+}
+
+button, input {
+	background-color: var(--background_color);
+	border: 1px solid var(--color);
+	border-radius: calc(var(--border_radius) * 8);
+	box-sizing: border-box;
+	color: var(--color);
+	font-family: var(--font_family);
+	padding: var(--padding);
+}
+
+button:active {
+	scale: 0.5;
+}
+
+fieldset {
+	border: var(--border_width) solid var(--color);
+	border-radius: var(--border_radius);
+}
+
+footer {
+	flex: 1 0 100%;
+}
+
+header {
+	flex: 1 0 100%;
+}
+
+main, header, footer {
+	box-sizing: border-box;
+	overflow: auto;
+	outline: var(--border);
+	padding: var(--padding);
+}
+
+main {
+	/* border-radius: var(--border_radius); */
+	margin: var(--margin);
+}

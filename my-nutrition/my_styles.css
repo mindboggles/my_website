@@ -1,0 +1,151 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 15px;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+caption {
+    padding: 16px;
+}
+
+th {
+    padding: 4px;
+    font-weight: 100;
+}
+
+td {
+    padding: 4px;
+    font-weight: 1000;
+}
+
+
+
+
+
+
+ 
+
+
+#total-nutrition {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    cursor: pointer;
+    background-color: white;
+}
+
+
+
+
+
+
+
+
+.foodDiv {
+    margin: 16px auto;
+    cursor: pointer;
+    background-color: rgb(240, 240, 240);
+}
+
+
+
+
+
+
+
+
+#food-adder {
+    height: 50px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+#adding-div {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 32px;
+}
+
+#food-search {
+    box-sizing: border-box;
+    text-align: center;
+    padding: 16px;
+    width: 100%;
+}
+
+#suggestions-div {
+    height: 70%;
+    overflow: auto;
+}
+
+.suggestion {
+    all: unset;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 16px;
+    cursor: pointer;
+    background-color: white;
+}
+
+
+
+
+
+
+
+
+#editing-div {
+    box-sizing: border-box;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    padding: 32px;
+    overflow: auto;
+}
+
+#edit-table {
+    background-color: rgb(255, 255, 255);
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+#edited-key, #edited-id, #edited-name {
+    margin: 16px;
+}
+
+#edited-grams, #edited-net-carbs {
+    width: 50px;
+}
+
+#editing-div input {
+    cursor: pointer;
+}
+
+#editing-div th {
+    text-align: right;
+}
+
+#editing-div td {
+    text-align: left;
+}
+
+#save-edited, #delete-edited {
+    box-sizing: border-box;
+    margin: 16px 0;
+}
