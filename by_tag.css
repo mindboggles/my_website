@@ -1,12 +1,12 @@
 :root {
-	--background_color: rgb(255, 255, 255);
+	--background_color: rgb(34, 34, 34);
 
 	--border: var(--border_width) solid var(--border_color);
-	--border_color: rgb(238, 238, 238);
+	--border_color: rgb(68, 68, 68);
 	--border_radius: 8px;
 	--border_width: 1px;
 
-	--color: rgb(0, 0, 0);
+	--color: rgb(221, 221, 221);
 	--color_gold: rgb(238, 119, 0);
 	--color_red: rgb(238, 0, 0);
 	--color_blue: rgb(0, 0, 238);
@@ -32,7 +32,7 @@ a:active {
 
 body {
 	align-content: space-between;
-	background-color: var(--background_color);
+	background-color: rgb(0, 0, 0);
 	/* background-image: linear-gradient(rgb(135, 240, 240), rgb(240, 135, 240)); */
 	/* background-image: linear-gradient(rgb(135, 135, 240), rgb(240, 135, 240), rgb(240, 135, 135), rgb(240, 240, 135)); */
 	/* background-image: linear-gradient(rgb(60, 60, 120), rgb(120, 60, 120), rgb(120, 60, 60), rgb(120, 120, 60)); */
@@ -48,22 +48,14 @@ body {
 	min-height: 100vh;
 }
 
-body::selection {
-	background-color: var(--color_blue);
-}
-
 button, input {
-	background-color: var(--background_color);
-	border: 1px solid var(--color);
+	background-color: var(--border_color);
+	border: unset;
 	border-radius: calc(var(--border_radius) * 8);
 	box-sizing: border-box;
 	color: var(--color);
 	font-family: var(--font_family);
 	padding: var(--padding);
-}
-
-button:active {
-	scale: 0.5;
 }
 
 fieldset {
@@ -80,6 +72,7 @@ header {
 }
 
 main, header, footer {
+	background-color: var(--background_color);
 	box-sizing: border-box;
 	overflow: auto;
 	outline: var(--border);
@@ -87,6 +80,6 @@ main, header, footer {
 }
 
 main {
-	/* border-radius: var(--border_radius); */
+	border-radius: var(--border_radius);
 	margin: var(--margin);
 }
