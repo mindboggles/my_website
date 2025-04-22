@@ -3,3 +3,5 @@
 ### now i am editing readme and will try to update on github
 
 ### it worked! Now I am editing README.md second time, and will try to repeat instructions.
+
+### tired of reading documentation, trying to figure something by practise.
