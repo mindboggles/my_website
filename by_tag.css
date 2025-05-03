@@ -68,6 +68,10 @@ footer {
 	flex: 0 1 100%;
 }
 
+h1 {
+	margin: calc(var(--margin) * 3);
+}
+
 header {
 	border-bottom: var(--border);
 	flex: 1 1 100%;
@@ -95,7 +99,7 @@ main {
 }
 
 p {
-	margin: var(--margin);
+	margin: calc(var(--margin) * 2);
 }
 
 section {
