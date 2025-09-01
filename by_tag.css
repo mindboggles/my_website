@@ -1,0 +1,103 @@
+/* :root {
+	--border: var(--border_width) solid var(--border_color);
+	--border_color: rgb(153, 153, 153);
+	--border_radius: 16px;
+	--border_width: 1px;
+	--font_family: sans-serif;
+	--margin: 8px;
+	--padding: 8px;
+}
+
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background_color: rgb(0, 0, 0);
+		--color: rgb(255, 255, 255);
+		--color_active: rgb(0, 204, 0);
+		--color_link: rgb(204, 102, 0);
+		--color_visited: rgb(204, 153, 0);
+	}
+
+	a:link {
+		color: var(--color_link);
+	}
+	
+	a:visited {
+		color: var(--color_visited);
+	}
+	
+	a:active {
+		color: var(--color_active);
+	}
+}
+
+aside{
+	margin: 0 var(--margin);
+}
+
+body {
+	align-content: space-between;
+	background: var(--background_color);
+	color: var(--color);
+	display: flex;
+	flex-wrap: wrap;
+	font-family: var(--font_family);
+	justify-content: center;
+	margin: 0;
+	min-height: 100vh;
+}
+
+button {
+	background-color: var(--background_color);
+	border-radius: var(--border_radius);
+	color: var(--color);
+	padding: var(--padding);
+}
+
+fieldset {
+	border: var(--border);
+	border-radius: var(--border_radius);
+	margin: var(--margin);
+}
+
+footer {
+	border-top: var(--border);
+	flex: 0 1 100%;
+}
+
+h1 {
+	margin: calc(var(--margin) * 3);
+}
+
+header {
+	border-bottom: var(--border);
+	flex: 1 1 100%;
+	position: sticky;
+	top: 0;
+}
+
+input {
+	background-color: var(--background_color);
+	border-radius: var(--border_radius);
+	color: var(--color);
+	padding: var(--padding);
+}
+
+li {
+	margin: var(--margin) 0;
+}
+
+main {
+	border-radius: var(--border_radius);
+	flex: 1 0;
+	display: grid;
+	justify-content: center;
+}
+
+p {
+	margin: calc(var(--margin) * 2);
+}
+
+section {
+	flex: 0 1;
+} */

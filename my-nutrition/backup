@@ -1,0 +1,253 @@
+function suggest(xlr) 
+{
+    var previousSuggestions = document.getElementById("suggestions-div");
+
+    while (previousSuggestions.hasChildNodes()) {
+        previousSuggestions.removeChild(previousSuggestions.firstChild);
+    }
+
+    var input = document.getElementById("food-search").value;
+    input = input.replace(/[^a-zA-Z āčēģīķļņšūž]/g, "");
+
+    if (input != "" && input != " ") {
+        let xlm = xlr.responseXML;
+        let tables = xlm.getElementsByTagName("table");
+
+        for(let i = 0; i < tables.length; i++) {
+            let table = tables[i];
+            let columns = table.getElementsByTagName("column");
+            let id = columns[0].childNodes[0].nodeValue;
+            let name = columns[1].childNodes[0].nodeValue;
+            let brand = columns[2].childNodes[0].nodeValue;
+            let cookedness = columns[3].childNodes[0].nodeValue;
+
+            if (name.toLowerCase().search(input) != -1 || brand.toLowerCase().search(input) != -1) {
+                console.log([id, name, brand, cookedness]);
+
+                let parent = document.getElementById("suggestions-div");
+                let child = document.createElement("input");
+
+                child.type = "button"; 
+                child.value = name + ", " + brand + ", " + cookedness;
+                child.id = "suggestion";
+
+                function testing() {
+                    document.addEventListener("click", ajax("select.php?food="+name, select));
+                }
+
+                child.addEventListener('click', testing);
+
+                parent.appendChild(child);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+<?php
+
+session_start();
+
+use PDO;
+use PDOException;
+
+try {
+    $connection = new PDO("mysql:host=localhost;dbname=my_db;charset=UTF8", "root", "", [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+}
+catch(PDOException $e) {
+    die($e->getMessage());
+}
+
+if(isset($_REQUEST["food"])) {
+    $prepared_statement = $connection->prepare("SELECT * FROM nutrition_facts_100g WHERE Name = ?");
+
+    $prepared_statement->execute([$_REQUEST["food"]]);
+
+    $fetched_food = $prepared_statement->fetch(PDO::FETCH_NUM);
+    
+    if(!empty($fetched_food)) {
+        $key = $fetched_food[1] . "0";
+
+        if(!empty($_SESSION["vladsite"])) {
+            $key = $fetched_food[1] . count($_SESSION["vladsite"]);
+        }
+        
+        $_SESSION["vladsite"][$key] = $fetched_food;
+    }
+}
+
+
+
+
+
+
+
+
+function ajax(url, functionName) 
+{
+    var xmlhttprequest = new XMLHttpRequest();
+
+    xmlhttprequest.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            functionName(this);
+        }
+    }
+
+    xmlhttprequest.open("GET", url, true);
+    xmlhttprequest.send();
+}
+
+
+
+
+
+
+
+
+function display(xhr) {
+    var tables = document.getElementById("food-tables");
+
+    while(tables.hasChildNodes()) {
+        tables.removeChild(tables.firstChild);
+    }
+
+    var txt = xhr.responseText;
+    var dataArrays = txt.split("-----");
+
+    for(let i = 1; i < dataArrays.length; i++) { // i = 1, because "var dataArrays = txt.split("-----");" creates empty value under 0 index
+        let dataArray = dataArrays[i].split("/");
+        var titles = ["Name", "Brand", "Cookedness", "GI", "Grams", "Calories", "Total Fat", "Saturated Fat", "Total Carbohydrate", "Dietary Fiber", "Protein"];
+        var newTable = document.createElement("table");
+        
+        for(let j = 0; j < dataArray.length; j++) {
+            let row = document.createElement("tr");
+            let title = document.createElement("th");
+            let value = document.createElement("td");
+
+            if(dataArray[j] != "NULL") {
+                title.innerHTML = titles[j];
+                value.innerHTML = dataArray[j];
+
+                row.appendChild(title);
+                row.appendChild(value);
+                newTable.appendChild(row);
+            }   
+        }
+
+        tables.appendChild(newTable);
+    }
+}
+
+
+
+
+
+
+
+
+function select(xhr, idParameter) 
+{
+    var xml = xhr.responseXML;
+    var tables = xml.getElementsByTagName("table");
+
+    for(let i = 0; i < tables.length; i++) {
+        var columns = tables[i].getElementsByTagName("column");
+        var id = columns[0].childNodes[0].nodeValue;
+
+        if(id == idParameter) {
+            var name = columns[1].childNodes[0].nodeValue;
+            var brand = columns[2].childNodes[0].nodeValue;
+            var cookedness = columns[3].childNodes[0].nodeValue;
+            var gi = columns[4].childNodes[0].nodeValue;
+            var grams = columns[5].childNodes[0].nodeValue;
+            var calories = columns[6].childNodes[0].nodeValue;
+            var totalFat = columns[7].childNodes[0].nodeValue;
+            var satFat = columns[8].childNodes[0].nodeValue;
+            var carbs = columns[9].childNodes[0].nodeValue;
+            var fiber = columns[10].childNodes[0].nodeValue;
+            var protein = columns[11].childNodes[0].nodeValue;
+            var selectRequest = new XMLHttpRequest();
+
+            selectRequest.onreadystatechange = function() {
+                if(this.readyState == 4 && this.status == 200) {
+                    window.location.reload()
+                }
+            }
+
+            selectRequest.open("GET", "select.php?name="+name+"&brand="+brand+"&cookedness="+cookedness+"&gi="+gi+"&grams="+grams+"&calories="+calories+"&totalFat="+totalFat+"&satFat="+satFat+"&carbs="+carbs+"&fiber="+fiber+"&protein="+protein, true);
+            selectRequest.send();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+function suggest (xhr) 
+{
+    removeSuggestions();
+
+    var input = document.getElementById("food-search").value.toLowerCase().replace(/[^a-zA-Z āčēģīķļņšūž]/g, "");
+
+    if(input != "" && input != " ") {
+        let xml = xhr.responseXML;
+        let tables = xml.getElementsByTagName("table");
+        let suggestions = document.getElementById("suggestions-div");
+
+        for(let i = 0; i < tables.length; i++) {
+            let columns = tables[i].getElementsByTagName("column");
+            let name = columns[1].childNodes[0].nodeValue;
+            let brand = columns[2].childNodes[0].nodeValue;
+
+            if (name.toLowerCase().search(input) != -1 || brand.toLowerCase().search(input) != -1) {
+                // let id = columns[0].childNodes[0].nodeValue;
+                let cookedness = columns[3].childNodes[0].nodeValue;
+                let gi = columns[4].childNodes[0].nodeValue;
+                let grams = columns[5].childNodes[0].nodeValue;
+                let calories = columns[6].childNodes[0].nodeValue;
+                let totalFat = columns[7].childNodes[0].nodeValue;
+                let satFat = columns[8].childNodes[0].nodeValue;
+                let carbs = columns[9].childNodes[0].nodeValue;
+                let fiber = columns[10].childNodes[0].nodeValue;
+                let protein = columns[11].childNodes[0].nodeValue;
+
+                let suggestion = document.createElement("input");
+
+                suggestion.type = "button";
+                suggestion.value = name + ", " + brand + ", " + cookedness;
+                suggestion.className = "suggestion";
+
+                if(brand == "NULL") {
+                    suggestion.value = name + ", " + cookedness;
+                }
+
+                suggestion.addEventListener('click', () => {
+                    ajax("select.php?name="+name+"&brand="+brand+"&cookedness="+cookedness+"&gi="+gi+"&grams="+grams+"&calories="+calories+"&totalFat="+totalFat+"&satFat="+satFat+"&carbs="+carbs+"&fiber="+fiber+"&protein="+protein, customReload);
+                });
+
+                suggestions.appendChild(suggestion);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+background-image: linear-gradient(rgb(0, 0, 36), rgb(36, 0, 71), rgb(107, 0, 107), rgb(143, 0, 71), rgb(180, 0, 0), rgb(216, 108, 0), rgb(252, 252, 0));
+background-image: linear-gradient(rgb(0, 0, 255), rgb(128, 0, 255), rgb(255, 0, 255), rgb(255, 0, 128), rgb(255, 0, 0), rgb(255, 128, 0), rgb(255, 255, 0));
+background-image: linear-gradient(rgb(128, 128, 255), rgb(192, 128, 255), rgb(255, 128, 255), rgb(255, 128, 192), rgb(255, 128, 128), rgb(255, 192, 128), rgb(255, 255, 128));
